@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TEAM1CONTROL : MonoBehaviour {
-    public LayerMask whatIsGround;
-    public Transform groundCheck;
-    public bool isGrounded;
+    bool isGrounded = true;
     public float jumpForce;
     public float speed;
     Rigidbody2D rb;
@@ -16,17 +14,24 @@ public class TEAM1CONTROL : MonoBehaviour {
     }
  
     void Update () {
-        if (Input.GetButtonDown ("p1_Jump") && isGrounded) {
-            rb.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);
+        if (Input.GetButtonDown ("p1_Jump") && isGrounded == true) {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
+            ;
         }
     }
  
     void FixedUpdate ()
     {
-        isGrounded = Physics2D.OverlapPoint (groundCheck.position, whatIsGround);
         float x = Input.GetAxis ("p1_Horizontal");
         Vector3 move = new Vector3 (x * speed, rb.velocity.y, 0f);
         rb.velocity = move;
+    }
+    void OnCollisionEnter2D(Collision2D collisionInfo)
+    {
+        if (collisionInfo.gameObject.tag == "ground")
+        {
+            isGrounded = true;
+        }
     }
 }
