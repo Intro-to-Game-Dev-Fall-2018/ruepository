@@ -12,7 +12,7 @@ public class RestartScript : MonoBehaviour {
 	
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
             SceneManager.LoadScene("SampleScene");
         }
